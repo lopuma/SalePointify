@@ -1,0 +1,164 @@
+@tailwind base;
+
+/* * {
+	scrollbar-width: thin;
+	scrollbar-color: var(--secondary) var(--primary);
+}
+
+*::-webkit-scrollbar {
+	width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+	background: var(--primary);
+	border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: var(--secondary);
+	border-radius: 14px;
+	border: 3px solid var(--primary);
+} */
+
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+:root {
+  height: 100%;
+  width: 100%;
+}
+
+@layer base {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+    --ring: 217.2 32.6% 17.5%;
+    --background: #fff;
+    --foreground: #323130;
+    --aside-background: #fff;
+    --aside-foreground: #323130;
+    --aside-hover: #edebe9;
+    --mainColorLight: #5767aa;
+    --secondaryColor: #db2b39;
+    --header-bg: #484644;
+    --header-fg: #e3e3e3;
+
+    --selected: #4fc0d0;
+    --selected-foreground: #164b60;
+    --never: #e76161;
+    --never-foreground: #d60909;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --primary: #ff5153;
+    --primary-hover: #db3b4b;
+    --primary-foreground: #94ffb1;
+
+    --secondary: #f2f2f2;
+    --secondary-hover: #e5e5e5;
+    --secondary-foreground: #ff5153;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: ;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+
+    /*========== Colors ==========*/
+    --header-height: 3.5rem;
+
+    /*Color mode HSL(hue, saturation, lightness)*/
+    --white-color: hsl(210, 32%, 99%);
+    --text-color: hsl(210, 4%, 55%);
+    --dark-color-light: hsla(210, 4%, 4%, 0.1);
+    --white-color-light: hsla(210, 4%, 99%, 0.1);
+    --gradient-x: linear-gradient(
+      90deg,
+      hsla(0, 0%, 0%, 0),
+      /* hsl(214, 4%, 64%), */ hsla(0, 0%, 23%),
+      hsla(0, 0%, 0%, 0)
+    );
+    --gradient-y: linear-gradient(
+      0,
+      hsla(0, 0%, 0%, 0),
+      /* hsl(214, 4%, 64%), */ hsla(0, 0%, 23%),
+      hsla(0, 0%, 0%, 0)
+    );
+
+    /*========== Font and typography ==========*/
+    /*.5rem = 8px | 1rem = 16px ...*/
+    --body-font: 'Montserrat', sans-serif;
+    --normal-font-size: 0.938rem;
+    --small-font-size: 0.813rem;
+
+    /*========== Font weight ==========*/
+    --font-medium: 500;
+    --font-semi-bold: 600;
+
+    /*========== z index ==========*/
+    --z-tooltip: 10;
+    --z-fixed: 100;
+  }
+}
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+  --background: #1c304a;
+  --foreground: #ffffff;
+
+  --never: #e76161;
+  --never-foreground: #b70404;
+
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: ;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 85.7% 97.3%;
+
+  --ring: 217.2 30% 22%;
+}
+
+@layer utilities {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
+}

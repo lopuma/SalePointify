@@ -1,0 +1,18 @@
+###
+GET http://192.168.1.142:3001/api/accounts
+
+###
+GET http://192.168.1.142:3001/api/accounts?s=close
+
+###
+GET http://192.168.1.142:3001/api/accounts?s=active
+
+###
+GET http://192.168.1.142:3001/api/accounts?d=2023-07-28
+
+
+###
+GET http://192.168.1.142:3001/api/accounts?s=active&d=2023-07-29
+
+###
+GET http://192.168.1.142:3001/api/accounts?s=close&d=2023-07-26
