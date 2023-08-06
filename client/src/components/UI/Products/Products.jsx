@@ -1,7 +1,9 @@
+import { ErrorComponent } from '@/components/Errors/page'
 import { CardLoader } from '@/components/Loaders/CardLoader'
 import { Pagination } from '@/components/Pagination/page'
 import { ProductItems } from '@/components/UI/Products/ProductItems'
 import useFilters from '@/hooks/useFilters'
+import { useProducts } from '@/hooks/useProducts'
 
 function ListProducts({ products }) {
   return (
@@ -26,26 +28,33 @@ function NoProductsResults() {
   )
 }
 
-function Products({ pagination, products }) {
-  const { filteredProducts } = useFilters({ products })
-  const hasProducts = filteredProducts === undefined
+function Products() {
+  const { filteredProducts } = useFilters()
+  const { pagination, loading, error } = useProducts()
   const isEmptyProducts =
     Array.isArray(filteredProducts) && filteredProducts.length === 0
-  return hasProducts ? (
-    <CardLoader count={16} />
-  ) : (
+  return (
     <>
-      <article className="w-full h-full grow rounded-md border border-gray-300 shadow-md flex place-content-center">
-        <div className="w-full px-4 grid grid-flow-fluid">
-          <Pagination pagination={pagination} />
-          {isEmptyProducts ? (
-            <NoProductsResults />
-          ) : (
-            <ListProducts products={filteredProducts} />
-          )}
-          <Pagination pagination={pagination} />
-        </div>
-      </article>
+      {error ? (
+        <ErrorComponent
+          customError={{ message: error }}
+          className="rounded-md"
+        />
+      ) : (
+        <article className="w-full h-full grow rounded-md border border-gray-300 shadow-md flex place-content-center">
+          <div className="w-full px-4 grid grid-flow-fluid">
+            <Pagination pagination={pagination} />
+            {loading ? (
+              <CardLoader count={16} />
+            ) : isEmptyProducts ? (
+              <NoProductsResults />
+            ) : (
+              <ListProducts products={filteredProducts} />
+            )}
+            <Pagination pagination={pagination} />
+          </div>
+        </article>
+      )}
     </>
   )
 }

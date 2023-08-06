@@ -1,19 +1,20 @@
 'use client'
 import { Container } from '@/components/Container'
+import { DeveplomentFooter } from '@/components/DeveplomentFooter/page'
 import { Cart } from '@/components/UI/Cart/page'
 import { Filters } from '@/components/UI/Filters/page'
 import Products from '@/components/UI/Products/Products'
-import { useProducts } from '@/hooks/useProducts'
+import config from '@/config'
 
 function NewOrder() {
-  const { products, pagination } = useProducts()
   return (
     <>
-      <Filters products={products} />
-      <Container className="w-full flex flex-col-reverse md:flex-row place-content-center m-auto gap-4 p-4">
-        <Products pagination={pagination} products={products} />
+      <Filters />
+      <Container className="mt-[160px] w-full flex flex-col-reverse md:flex-row place-content-center gap-4 p-4">
+        <Products />
         <Cart />
       </Container>
+      {config.IS_DEVELOPMENT && <DeveplomentFooter />}
     </>
   )
 }

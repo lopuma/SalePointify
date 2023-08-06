@@ -7,6 +7,7 @@ import routerCompany from './routes/api/company/Company.router.api.js'
 import routerIndex from './routes/api/index/index.router.api.js'
 import routerPopulations from './routes/api/locations/Populations.router.api.js'
 import routerProvinces from './routes/api/locations/Provinces.router.api.js'
+import routerProducts from './routes/api/products/products.router.api.js'
 import { ready, warn } from './utils.js'
 const PORT = _PORT
 const HOST = _HOST
@@ -29,6 +30,7 @@ app.use('/api/company', routerCompany)
 app.use('/api/locations/provinces', routerProvinces)
 app.use('/api/locations/populations', routerPopulations)
 app.use('/api/accounts', routerAccounts)
+app.use('/api/products', routerProducts)
 
 app.use((req, res) => {
   res.status(404).json({

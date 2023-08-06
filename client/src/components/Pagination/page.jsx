@@ -16,6 +16,7 @@ import Link from 'next/link'
  * navigating between pages.
  */
 export function Pagination({ pagination }) {
+  console.log({ pagination })
   const { page, perPage, totalPages, total } = pagination
   const isFirstPage = page === 1
   const isLastPage = page === totalPages

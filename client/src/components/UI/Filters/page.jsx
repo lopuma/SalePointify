@@ -1,13 +1,19 @@
 import { Container } from '@/components/Container'
 import { FILTERS_LIST } from '@/consts/filters'
 import useFilters from '@/hooks/useFilters'
+import { useProducts } from '@/hooks/useProducts'
+import { useState } from 'react'
 import { FaCartShopping, FaChartColumn, FaFilter } from 'react-icons/fa6'
+export function Filters() {
+  const { products } = useProducts()
+  const { filteredProducts, category, setUpdateCategory } = useFilters()
 
-export function Filters({ products }) {
-  const { filteredProducts, category, setUpdateCategory, allCategory } =
-    useFilters({
-      products,
-    })
+  const [allCategory] = useState(() => {
+    const allCategory = products?.map(({ category }) => category)
+    const uniqueCategories = new Set([...allCategory])
+
+    return [...uniqueCategories]
+  })
 
   const handleChangeCategory = (event) => {
     if (event.target.value === category) return
@@ -18,7 +24,7 @@ export function Filters({ products }) {
     <Container>
       <div
         className={
-          'mt-[160px] w-full flex flex-col-reverse md:flex-row  justify-between items-center	m-auto gap-4 p-4'
+          'fixed top-[80px] left-0 z-20 w-full flex flex-col-reverse md:flex-row  justify-between items-center	m-auto gap-4 p-4 backdrop-blur-md backdrop-saturate-200'
         }
       >
         <form className="flex w-max">

@@ -7,10 +7,9 @@ const checkUrlAvailability = async (url) => {
     const response = await axios.head(url, { timeout: 3000 })
     return response.status === 200
   } catch {
-    console.error(
-      'The requested URL could not be accessed. Please verify the address and try again later.'
+    throw new Error(
+      'The requested failed with status code 404, please verify the address and try again later.'
     )
-    return false
   }
 }
 
@@ -33,12 +32,7 @@ const getSuspender = (promise) => {
       case 'pending':
         throw suspender
       case 'error':
-        return {
-          message:
-            'There was a problem with the axios request, please review API URL',
-          status: 404,
-          response,
-        }
+        throw new Error(response)
       default:
         return response
     }
@@ -50,16 +44,13 @@ const getSuspender = (promise) => {
 export const fetchData = async (url) => {
   try {
     const _URL = `${API_BASE_URL}${url}`
-
     const isAvailable = await checkUrlAvailability(_URL)
     if (!isAvailable) {
-      console.error(`The URL ${_URL} is not available`)
-      return
+      throw new Error(`The URL ${_URL} is not available`)
     }
     const promise = axios.get(_URL)
     return getSuspender(promise)
   } catch (e) {
-    console.error('There was a problem with the axios request: ' + e.message)
-    throw new Error('There was a problem with the axios request: ' + e.message)
+    throw new Error(e)
   }
 }

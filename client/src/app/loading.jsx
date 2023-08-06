@@ -1,7 +1,7 @@
-import {Container} from '@/components/Container'
+import { Container } from '@/components/Container'
 import Skeleton from '@/components/UI/Skeleton'
 
-const Loading = () => {
+function Loading() {
   return (
     <Container>
       <div className="w-full h-full p-4">
@@ -18,5 +18,4 @@ const Loading = () => {
     </Container>
   )
 }
-
 export default Loading

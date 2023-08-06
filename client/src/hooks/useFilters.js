@@ -1,7 +1,9 @@
 import { FILTERS_LIST } from '@/consts/filters'
+import { useProducts } from '@/hooks/useProducts'
 import { storeFilters } from '@/store/storeFilters'
 
-function useFilters({ products }) {
+function useFilters() {
+  const { products } = useProducts()
   const { category, setUpdateCategory } = storeFilters()
   const filterProducts = (products) => {
     return products?.filter((product) => {
@@ -11,25 +13,12 @@ function useFilters({ products }) {
       )
     })
   }
-  const categories = () => {
-    const allCategories = products?.map(({ category }) => category)
-    if (allCategories === undefined) {
-      return null
-    }
-
-    const uniqueCategories = new Set([...allCategories])
-    const uniqueCategoriesArray = [...uniqueCategories]
-    return uniqueCategoriesArray
-  }
-
-  const allCategory = categories()
 
   const filteredProducts = filterProducts(products)
   return {
     category,
     setUpdateCategory,
     filteredProducts,
-    allCategory,
   }
 }
 

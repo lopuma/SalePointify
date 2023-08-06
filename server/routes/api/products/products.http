@@ -1,0 +1,18 @@
+###
+GET http://192.168.1.142:3001/api/products
+
+###
+GET http://192.168.1.142:3001/api/products?s=close
+
+###
+GET http://192.168.1.142:3001/api/products?s=active
+
+###
+GET http://192.168.1.142:3001/api/products?d=2023-07-28
+
+
+###
+GET http://192.168.1.142:3001/api/products?s=active&d=2023-07-29
+
+###
+GET http://192.168.1.142:3001/api/products?s=close&d=2023-07-26

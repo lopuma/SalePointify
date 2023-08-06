@@ -3,15 +3,13 @@ import { monda } from '@/assets/fonts/fonts'
 import Backdrop from '@/components/Backdrop/page'
 import Footer from '@/components/Footer/page'
 import Header from '@/components/Header/page'
-import NavPos from '@/components/Nav-pos/Nav-pos'
+import ProductsProvider from '@/context/Products/ProductsContext'
 import { useCompany } from '@/hooks/useCompanyName'
+import QueryProvider from '@/providers/query-provider'
 import ToastProvider from '@/providers/toast-provider'
 import { Suspense, useEffect } from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
 import './globals.css'
 import Loading from './loading.jsx'
-
-const queryClient = new QueryClient()
 
 export default function RootLayout({ children }) {
   const { getCompanyName } = useCompany()
@@ -21,18 +19,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${monda.className}`}>
-        <QueryClientProvider client={queryClient}>
-          <ToastProvider />
-          <Header />
-          <Suspense fallback={<Loading />}>
-            <main className="min-h-[100vh] relative">
-              <NavPos />
-              {children}
-            </main>
-          </Suspense>
-          <Backdrop />
-          <Footer />
-        </QueryClientProvider>
+        <ProductsProvider>
+          <QueryProvider>
+            <ToastProvider />
+            <Header />
+            <Suspense fallback={<Loading />}>
+              <main className="min-h-[100vh] relative">{children}</main>
+            </Suspense>
+            <Backdrop />
+            <Footer />
+          </QueryProvider>
+        </ProductsProvider>
       </body>
     </html>
   )
