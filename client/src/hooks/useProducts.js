@@ -1,11 +1,33 @@
-import { useContext } from 'react'
+import { useAddProducts, useFetchProducts } from '@/services/products'
+import { useQuery } from '@tanstack/react-query'
+import { useSearchParams } from 'next/navigation'
+import { useRef } from 'react'
 
-import { ProductsContext } from '@/context/Products/ProductsContext'
-
-export function useProducts() {
-  const { products, pagination, error, loading } = useContext(ProductsContext)
-  if (products === undefined) {
-    throw new Error('useProducts must be used within a ProductsProvider')
-  }
-  return { products, pagination, error, loading }
+const usePage = () => {
+  const searchParams = useSearchParams()
+  const page = useRef('1')
+  page.current = searchParams.get('page')
+  if (!page.current) return '1'
+  return page.current
 }
+
+function useProducts() {
+  const page = usePage()
+  const mutation = useAddProducts()
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['products', page],
+    queryFn: useFetchProducts,
+    staleTime: Infinity,
+  })
+
+  return {
+    products: data?.products,
+    pagination: data?.pagination,
+    isError,
+    isLoading,
+    allCategory: data?.allCategory,
+    mutation,
+  }
+}
+
+export default useProducts

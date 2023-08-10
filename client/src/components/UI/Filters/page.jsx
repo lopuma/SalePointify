@@ -1,19 +1,13 @@
 import { Container } from '@/components/Container'
 import { FILTERS_LIST } from '@/consts/filters'
-import useFilters from '@/hooks/useFilters'
-import { useProducts } from '@/hooks/useProducts'
-import { useState } from 'react'
+import { useFilters } from '@/hooks/useFilters'
+import useProducts from '@/hooks/useProducts'
 import { FaCartShopping, FaChartColumn, FaFilter } from 'react-icons/fa6'
+
 export function Filters() {
-  const { products } = useProducts()
-  const { filteredProducts, category, setUpdateCategory } = useFilters()
-
-  const [allCategory] = useState(() => {
-    const allCategory = products?.map(({ category }) => category)
-    const uniqueCategories = new Set([...allCategory])
-
-    return [...uniqueCategories]
-  })
+  const { allCategory, products } = useProducts()
+  const { filterProducts, category, setUpdateCategory } = useFilters()
+  const filteredProducts = filterProducts(products)
 
   const handleChangeCategory = (event) => {
     if (event.target.value === category) return
@@ -31,8 +25,10 @@ export function Filters() {
           <label>
             <select
               name="category"
+              id="select-category"
               onChange={handleChangeCategory}
               className="border border-slate-400 p-2 rounded-md backdrop-blur w-[199px] child:bg-secondary"
+              value={category}
             >
               <option value={FILTERS_LIST.ALL_PRODUCTS_FILTER}>
                 {FILTERS_LIST.ALL_PRODUCTS_FILTER.toUpperCase()}
@@ -52,15 +48,15 @@ export function Filters() {
           }
         >
           <p title="Leaked Products">
-            <span>{filteredProducts?.length}</span>
+            <span>{filteredProducts?.length || 0}</span>
             <FaFilter />
           </p>
           <p title="All the Products">
-            <span>{products?.length}</span>
+            <span>{products?.length || 0}</span>
             <FaChartColumn />
           </p>
           <p title="Products in the cart">
-            <span>{filteredProducts?.length}</span>
+            <span>{filteredProducts?.length || 0}</span>
             <FaCartShopping />
           </p>
         </div>

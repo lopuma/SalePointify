@@ -1,9 +1,11 @@
 import { Router } from 'express'
+import { v4 as uuidv4 } from 'uuid'
+
 const routerProducts = Router()
 let productsData = {
   page: 1,
-  per_page: 10,
-  total: 10,
+  per_page: 17,
+  total: 17,
   total_pages: 1,
   results: [
     {
@@ -104,10 +106,80 @@ let productsData = {
       image: 'http://peticiones.online/images/products/image16.png',
       active: true,
     },
+    {
+      _id: '63740f5fe2c75d8744f80a2d',
+      name: 'Suéter Ligero con Frente Abierto Mujer',
+      description: 'Corte estrecho y cómodo que permite el movimiento ',
+      price: 18.9,
+      category: 'mujer',
+      image: 'http://peticiones.online/images/products/image02.png',
+      active: false,
+    },
+    {
+      _id: '63740f5fe2c75d8744f80a2c',
+      name: 'Hombre Camisetas interiores de cuello a la caja, Pack de 6',
+      description: 'Tejido de punto ligero, cómodo y suave. ',
+      price: 23.99,
+      category: 'hombre',
+      image: 'http://peticiones.online/images/products/image01.png',
+      active: true,
+    },
+    {
+      _id: '63740f5fe2c75d8744f80a2e',
+      name: 'Polo de Golf de Secado rápido de Ajuste Regular Hombre',
+      description:
+        'Este producto talla grande, considera elegir una talla inferior a la usual',
+      price: 10.25,
+      category: 'hombre',
+      image: 'http://peticiones.online/images/products/image03.png',
+      active: true,
+    },
+    {
+      _id: '63740f5fe2c75d8744f80a31',
+      name: 'Saco de Dormir de Microforro Polar Unisex bebé, Pack de 2',
+      description:
+        'Aprovecha los básicos para bebés con estos monos de algodón 100 % suave con un cuello de vuelta y broches en la entrepierna para un fácil vestido y pañales.',
+      price: 32.99,
+      category: 'niño',
+      image: 'http://peticiones.online/images/products/image06.png',
+      active: false,
+    },
+    {
+      _id: '63740f5fe2c75d8744f80a37',
+      name: 'Vestido Cruzado con Manga Casquillo',
+      description:
+        'Ajustado en la zona del pecho y la cintura; se ensancha hacia el dobladillo',
+      price: 15.99,
+      category: 'mujer',
+      image: 'http://peticiones.online/images/products/image12.png',
+      active: true,
+    },
+    {
+      _id: '63740f5fe2c75d8744f80a3c',
+      name: 'Camisa de Manga Larga de Ajuste clásico',
+      description:
+        'Esta camisa clásica y versátil proporciona un aspecto fácil perfecto para cualquier ocasión. ',
+      price: 23.79,
+      category: 'other',
+      image: 'http://peticiones.online/images/products/image17.png',
+      active: true,
+    },
+    {
+      _id: '63740f5fe2c75d8744f80a38',
+      name: 'Camisa de Senderismo de Manga Corta',
+      description:
+        'Esta camisa clásica y versátil proporciona un aspecto limpio y abotonado, perfecto para cualquier ocasión.',
+      price: 20.84,
+      category: 'hombre',
+      image: 'http://peticiones.online/images/products/image13.png',
+      active: true,
+    },
   ],
 }
 
 const getProducts = (req, res) => {
+  const page = req.query.page
+  console.log({ page })
   try {
     return res.status(200).json(productsData)
   } catch (error) {
@@ -119,6 +191,21 @@ const getProducts = (req, res) => {
   }
 }
 
+const postProducts = (req, res) => {
+  const { name, price, category, image, description, active } = req.body
+  const data = req.body
+  const _id = uuidv4()
+  const newData = { _id, ...data }
+  console.log({ newData })
+  productsData.results.push(newData)
+  res.status(201).json({
+    success: true,
+    message: 'Company data updated',
+    data: newData,
+  })
+}
+
 routerProducts.get('/', getProducts)
+routerProducts.post('/', postProducts)
 
 export default routerProducts

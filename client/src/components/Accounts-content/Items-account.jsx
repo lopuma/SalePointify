@@ -6,7 +6,7 @@ const NavAccounts = ({ accounts }) => {
     <>
       <ul
         className={
-          "relative overflow-auto  no-scrollbar min-h-[50vh] max-h-screen p-2 my-4 flex flex-col gap-4 after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-1 after:bg-gradientx"
+          "relative overflow-auto  no-scrollbar min-h-screen max-h-screen p-2 my-4 flex flex-col gap-4 after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-1 after:bg-gradientx"
         }
       >
         {accounts?.success === false ? (

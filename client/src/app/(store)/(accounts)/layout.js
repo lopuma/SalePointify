@@ -24,11 +24,7 @@ export default function AccountLayout({ children }) {
         <Suspense fallback={<TabLoader />}>
           <TabPanel items={itemsAccounts} id="account-tab">
             <Box />
-            <Link
-              href={'/orders/new-order'}
-              // className="bg-secondary text-secondary-foreground hover:bg-secondary-hover flex place-content-center border rounded-md p-2 mx-4"
-              className={`${styles.link}`}
-            >
+            <Link href={'/orders/new-order'} className={`${styles.link}`}>
               New Order
             </Link>
           </TabPanel>

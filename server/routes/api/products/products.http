@@ -16,3 +16,17 @@ GET http://192.168.1.142:3001/api/products?s=active&d=2023-07-29
 
 ###
 GET http://192.168.1.142:3001/api/products?s=close&d=2023-07-26
+
+###
+POST http://192.168.1.142:3001/api/products
+Content-Type: application/json
+
+{
+    "name":"rice",
+    "price":0.89,
+    "category":"other",
+    "description":"This is a product",
+    "active":true,
+    "image":"https://res.cloudinary.com/ordering/image/upload/f_auto,q_auto,w_250,c_limit/f_auto,q_auto,h_600,c_limit/v1650277680/fcpbremjyx82d4q32vvo.jpg"
+}
+

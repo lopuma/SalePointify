@@ -1,17 +1,18 @@
-import useFilters from '@/hooks/useFilters'
-import { useProducts } from '@/hooks/useProducts'
+import { useFilters } from '@/hooks/useFilters'
+import useProducts from '@/hooks/useProducts'
 import styles from './dev.module.css'
 
 export function DeveplomentFooter() {
-  const { error, loading } = useProducts()
-  const { category, filteredProducts } = useFilters()
+  const { isError, isLoading, products } = useProducts()
+  const { category, filterProducts } = useFilters()
+  const filteredProducts = filterProducts(products)
   return (
     <footer className={`${styles.footer}`}>
       {JSON.stringify({ category }, null, 2)}
-      {loading ? (
+      {isLoading ? (
         <p>Cargando...</p>
-      ) : error ? (
-        <p>{JSON.stringify(error)}</p>
+      ) : isError ? (
+        <p>{JSON.stringify(isError)}</p>
       ) : (
         <p>Products : {JSON.stringify(filteredProducts?.length, null, 2)}</p>
       )}

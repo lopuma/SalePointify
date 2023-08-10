@@ -16,7 +16,7 @@ import Link from 'next/link'
  * navigating between pages.
  */
 export function Pagination({ pagination }) {
-  console.log({ pagination })
+  if (!pagination) return null
   const { page, perPage, totalPages, total } = pagination
   const isFirstPage = page === 1
   const isLastPage = page === totalPages
@@ -25,7 +25,7 @@ export function Pagination({ pagination }) {
   const prePageUrl = isFirstPage ? '#' : `?page=${prevPage}`
   const nextPageUrl = isLastPage ? '#' : `?page=${nextPage}`
   return (
-    <div className="flex flex-col items-center my-8">
+    <div className="flex flex-col justify-center items-center my-8">
       <span className="text-sm text-gray-700 dark:text-gray-400">
         Showing{' '}
         <span className="font-semibold text-gray-900 dark:text-white">

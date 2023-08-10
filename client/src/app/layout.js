@@ -3,10 +3,10 @@ import { monda } from '@/assets/fonts/fonts'
 import Backdrop from '@/components/Backdrop/page'
 import Footer from '@/components/Footer/page'
 import Header from '@/components/Header/page'
-import ProductsProvider from '@/context/Products/ProductsContext'
 import { useCompany } from '@/hooks/useCompanyName'
 import QueryProvider from '@/providers/query-provider'
 import ToastProvider from '@/providers/toast-provider'
+import { NextUIProvider } from '@nextui-org/react'
 import { Suspense, useEffect } from 'react'
 import './globals.css'
 import Loading from './loading.jsx'
@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${monda.className}`}>
-        <ProductsProvider>
+        <NextUIProvider>
           <QueryProvider>
             <ToastProvider />
             <Header />
@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
             <Backdrop />
             <Footer />
           </QueryProvider>
-        </ProductsProvider>
+        </NextUIProvider>
       </body>
     </html>
   )

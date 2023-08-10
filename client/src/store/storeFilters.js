@@ -5,7 +5,6 @@ export const storeFilters = create(
   persist(
     (set) => ({
       category: FILTERS_LIST.ALL_PRODUCTS_FILTER,
-      minPrice: 0,
       setUpdateCategory: (category) =>
         set((state) => ({ category: (state.category = category) })),
     }),

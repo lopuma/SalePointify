@@ -9,7 +9,7 @@ import ItemPos from './Item-pos'
 const NavPos = () => {
   return (
     <Container
-      className={'bg-gray-100 position fixed left-0 right-0 top-[80px] z-40'}
+      className={'top-[80px] bg-gray-100 position fixed left-0 right-0 z-40'}
     >
       <nav className="w-full h-[60px] flex items-center justify-between  overflow-auto no-scrollbar md:overflow-x-auto md:overflow-y-hidden">
         <ul className="flex justify-between items-center gap-6">

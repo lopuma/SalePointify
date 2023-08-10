@@ -1,25 +1,15 @@
 import { FILTERS_LIST } from '@/consts/filters'
-import { useProducts } from '@/hooks/useProducts'
 import { storeFilters } from '@/store/storeFilters'
 
-function useFilters() {
-  const { products } = useProducts()
+export function useFilters() {
   const { category, setUpdateCategory } = storeFilters()
   const filterProducts = (products) => {
     return products?.filter((product) => {
       return (
         category === FILTERS_LIST.ALL_PRODUCTS_FILTER ||
-        product.category === category
+        product?.category === category
       )
     })
   }
-
-  const filteredProducts = filterProducts(products)
-  return {
-    category,
-    setUpdateCategory,
-    filteredProducts,
-  }
+  return { category, filterProducts, setUpdateCategory }
 }
-
-export default useFilters

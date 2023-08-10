@@ -30,3 +30,16 @@ export function BookNotification({ message, book, listName, Icon }) {
     </div>
   )
 }
+
+export function SuccessNotification({ message, Icon }) {
+  return (
+    <div className="flex justify-center items-center gap-2 overflow-hidden">
+      <p className="text-md">
+        <span className="font-bold"></span> {message}{' '}
+      </p>
+      <a className="text-lg text-success">
+        <Icon />
+      </a>
+    </div>
+  )
+}
