@@ -20,7 +20,7 @@ export default function AccountLayout({ children }) {
   return (
     <>
       <NavPos />
-      <Container className="relative mb-[20px] flex flex-col sm:flex-row p-4 gap-2 mt-[140px]">
+      <Container className="relative mb-[20px] flex flex-col sm:flex-row gap-4 mt-[180px]">
         <Suspense fallback={<TabLoader />}>
           <TabPanel items={itemsAccounts} id="account-tab">
             <Box />

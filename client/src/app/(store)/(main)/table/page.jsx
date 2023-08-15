@@ -1,5 +1,4 @@
 'use client'
-import { Container } from '@/components/Container'
 import useProducts from '@/hooks/useProducts'
 import { useRef } from 'react'
 
@@ -22,7 +21,7 @@ const Table = () => {
   }
 
   return (
-    <Container className={'mt-[160px]'}>
+    <div>
       <form
         className="border border-gray-500 rounded-md p-4"
         onSubmit={handleSubmit}
@@ -110,7 +109,7 @@ const Table = () => {
           Submit
         </button>
       </form>
-    </Container>
+    </div>
   )
 }
 

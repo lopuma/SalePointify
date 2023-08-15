@@ -1,39 +1,37 @@
-import Link from 'next/link'
-
+import { usePageStore } from '@/store/storePage'
 /**
  * The `Pagination` component is a React component that displays pagination information and navigation
  * buttons.
  * @typedef {Object} PaginationProps
  * @property {Object} pagination - An object containing pagination data.
- * @property {number} pagination.page - The current page number.
- * @property {number} pagination.perPage - The number of items to display per page.
+ * @property {number} pagination.isPage - The current isPage number.
+ * @property {number} pagination.perPage - The number of items to display per isPage.
  * @property {number} pagination.totalPages - The total number of pages.
  * @property {number} pagination.total - The total number of items.
  *
  * @param {PaginationProps} props - The props for the Pagination component.
  * @returns {JSX.Element} The Pagination component returns a JSX element that displays information about the
- * current page and the total number of products. It also includes previous and next buttons for
+ * current isPage and the total number of products. It also includes previous and next buttons for
  * navigating between pages.
  */
-export function Pagination({ pagination }) {
+export function Pagination({ pagination, isPreviousData }) {
+  const { isPage, setIsPage } = usePageStore()
   if (!pagination) return null
-  const { page, perPage, totalPages, total } = pagination
-  const isFirstPage = page === 1
-  const isLastPage = page === totalPages
-  const nextPage = page + 1
-  const prevPage = page - 1
-  const prePageUrl = isFirstPage ? '#' : `?page=${prevPage}`
-  const nextPageUrl = isLastPage ? '#' : `?page=${nextPage}`
+  const { perPage, totalPages, total } = pagination
+  const isFirstPage = isPage === 1
+  const isLastPage = isPage === totalPages
+  const nextPage = () => setIsPage(isPage + 1)
+  const prevPage = () => setIsPage(isPage - 1)
   return (
     <div className="flex flex-col justify-center items-center my-8">
       <span className="text-sm text-gray-700 dark:text-gray-400">
         Showing{' '}
         <span className="font-semibold text-gray-900 dark:text-white">
-          {(page - 1) * perPage + 1}
+          {(isPage - 1) * perPage + 1}
         </span>{' '}
         to{' '}
         <span className="font-semibold text-gray-900 dark:text-white">
-          {Math.min(page * perPage, total)}
+          {Math.min(isPage * perPage, total)}
         </span>{' '}
         of{' '}
         <span className="font-semibold text-gray-900 dark:text-white">
@@ -43,12 +41,12 @@ export function Pagination({ pagination }) {
       </span>
 
       <div className="inline-flex mt-2 xs:mt-0">
-        <Link
-          href={prePageUrl}
-          disabled={isFirstPage}
+        <button
+          disabled={isPreviousData || isFirstPage}
           className={`flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
             isFirstPage ? 'pointer-events-none opacity-50' : ''
           }`}
+          onClick={prevPage}
         >
           <svg
             className="w-3.5 h-3.5 mr-2"
@@ -66,13 +64,13 @@ export function Pagination({ pagination }) {
             />
           </svg>
           Prev
-        </Link>
-        <Link
-          href={nextPageUrl}
-          disabled={isLastPage}
+        </button>
+        <button
+          disabled={isPreviousData || isLastPage}
           className={`flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
             isLastPage ? 'pointer-events-none opacity-50' : ''
           }`}
+          onClick={nextPage}
         >
           Next
           <svg
@@ -90,7 +88,7 @@ export function Pagination({ pagination }) {
               d="M1 5h12m0 0L9 1m4 4L9 9"
             />
           </svg>
-        </Link>
+        </button>
       </div>
     </div>
   )

@@ -14,6 +14,5 @@ export const useScrollPosition = () => {
       }
     })
   }
-  console.log('useScrollPosition', count.value)
   return { count }
 }

@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { v4 as uuidv4 } from 'uuid'
+import { pool } from '../../../connection/psql.js'
 
 const routerProducts = Router()
 let productsData = {
@@ -177,18 +178,61 @@ let productsData = {
   ],
 }
 
-const getProducts = (req, res) => {
-  const page = req.query.page
-  console.log({ page })
-  try {
-    return res.status(200).json(productsData)
-  } catch (error) {
-    console.error('Error in getProducts:', error)
-    return res.status(500).json({
-      success: false,
-      message: 'An error occurred on the server.',
-    })
+const getProducts = async (req, res) => {
+  let category = req.query.category
+  if (category === 'all' || !category) {
+    category = ''
   }
+  const page = parseInt(req.query.page) || 1
+  console.log({ category, page })
+  const perPage = 10
+  try {
+    // TODO ALL Category
+    const categoryQuery =
+      'SELECT p.category FROM products as p GROUP BY p.category'
+    const allCategory = await pool.query(categoryQuery)
+    // TODO total de produtos por filtro
+    const countQuery =
+      'SELECT COUNT(*) as total FROM products WHERE category LIKE $1::text'
+    const totalCount = await pool.query(countQuery, [`${category}%`])
+
+    // TODO paginacion
+    const query = `
+    WITH filtered_products AS (
+      SELECT *
+      FROM products
+      WHERE category LIKE $1::text
+    )
+    SELECT *
+    FROM filtered_products
+    ORDER BY id ASC
+    OFFSET $2::integer
+    LIMIT $3::integer
+  `
+    const offset = (page - 1) * perPage
+    const results = await pool.query(query, [`${category}%`, offset, perPage])
+    const total = parseInt(totalCount.rows[0].total, 10)
+    const totalPages = Math.ceil(total / perPage)
+
+    const responseObject = {
+      page,
+      per_page: perPage,
+      total,
+      total_pages: totalPages,
+      results: results.rows,
+      allCategory: allCategory.rows,
+    }
+
+    console.log(total, totalPages)
+    return res.status(200).json(responseObject)
+  } catch (error) {
+    console.error('Error:', error)
+    return res.status(500).json({ error: 'Internal server error' })
+  }
+  // finally {
+  //   // Cerrar la conexión a la base de datos
+  //   await pool.end()
+  // }
 }
 
 const postProducts = (req, res) => {

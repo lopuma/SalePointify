@@ -1,25 +1,29 @@
 import { SuccessNotification } from '@/components/UI/Notification/ProductNotifications'
+import config from '@/config'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { AiFillCheckCircle } from 'react-icons/ai'
+const API_BASE_URL = config.API_BASE_URL
 
 export const useFetchProducts = async ({ queryKey }) => {
-  console.log('Fetching product => ')
   if (queryKey === '') return null
-  return await axios
-    .get(`http://192.168.1.142:3001/api/products?page=${queryKey[1]}`)
+  const instance = axios.create({
+    baseURL: API_BASE_URL,
+  })
+  return await instance
+    .get(`/products?category=${queryKey[1]}&page=${queryKey[2]}`)
     .then(async (res) => {
       return await res.data
     })
     .then((res) => {
       const pagination = {
-        page: res.page,
-        perPage: res.per_page,
-        total: res.total,
-        totalPages: res.total_pages,
+        page: res?.page,
+        perPage: res?.per_page,
+        total: res?.total,
+        totalPages: res?.total_pages,
       }
-      const mappedProducts = res.results.map((product) => {
+      const mappedProducts = res?.results.map((product) => {
         return {
           id: product._id,
           title: product.name,
@@ -30,9 +34,8 @@ export const useFetchProducts = async ({ queryKey }) => {
           active: product.active,
         }
       })
-      const hasCategory = res?.results?.map(({ category }) => category)
+      const hasCategory = res?.allCategory?.map(({ category }) => category)
       const uniqueCategories = new Set([...hasCategory])
-
       return {
         products: mappedProducts,
         pagination,
@@ -55,15 +58,13 @@ export const useAddProducts = () => {
   const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: (formData) => {
-      console.log({ formData })
       return axios.post('http://192.168.1.142:3001/api/productss', newProduct)
     },
     onError: (error, variables, context) => {
       console.log({ error, variables })
-      console.log(`rolling back optimistic update with id ${context.id}`)
+      console.error(`rolling back optimistic update with id ${context.id}`)
     },
     onSuccess: (data, variables, context) => {
-      console.log({ data, variables, context })
       toast(
         <SuccessNotification
           message={'Producto agregado correctamente'}
@@ -72,9 +73,7 @@ export const useAddProducts = () => {
       )
       queryClient.invalidateQueries({ queryKey: ['products'] })
     },
-    onSettled: () => {
-      console.log("I'm second!")
-    },
+    onSettled: () => {},
   })
 
   return mutation

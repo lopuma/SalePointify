@@ -1,3 +1,4 @@
+import { Container } from '@/components/Container'
 import NavPos from '@/components/Nav-pos/Nav-pos'
 
 export const metadata = {
@@ -8,8 +9,7 @@ export default function MainLayout({ children }) {
   return (
     <>
       <NavPos />
-
-      <article>{children}</article>
+      <Container className={'mt-[180px] bg-red-400'}>{children}</Container>
     </>
   )
 }

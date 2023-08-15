@@ -1,6 +1,5 @@
 import { FILTERS_LIST } from '@/consts/filters'
 import { storeFilters } from '@/store/storeFilters'
-
 export function useFilters() {
   const { category, setUpdateCategory } = storeFilters()
   const filterProducts = (products) => {

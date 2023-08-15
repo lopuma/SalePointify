@@ -1,6 +1,6 @@
 import { ErrorComponent } from '@/components/Errors/page'
 import { CardLoader } from '@/components/Loaders/CardLoader'
-import { Pagination } from '@/components/Pagination/page'
+import { Pagination } from '@/components/Pagination/Pagination'
 import { ProductItems } from '@/components/UI/Products/ProductItems'
 import { useFilters } from '@/hooks/useFilters'
 import useProducts from '@/hooks/useProducts'
@@ -28,19 +28,27 @@ function NoProductsResults() {
 }
 
 function Products() {
-  const { pagination, isLoading, isError, products } = useProducts()
+  const {
+    pagination,
+    isLoading,
+    isError,
+    error,
+    products,
+    isFetching,
+    isPreviousData,
+  } = useProducts()
   const { filterProducts } = useFilters()
   const filteredProducts = filterProducts(products)
-  console.log({ pagination, isLoading, isError, filteredProducts })
   return (
     <>
       <article className="w-full h-full grow rounded-md border border-gray-300 shadow-md flex flex-col place-content-center px-4">
-        <Pagination pagination={pagination} />
+        <Pagination pagination={pagination} isPreviousData={isPreviousData} />
         <ListProducts products={filteredProducts} />
         {isLoading && <CardLoader count={16} />}
+        {!isLoading && isFetching && <CardLoader count={16} />}
         {isError && (
           <ErrorComponent
-            customError={{ message: isError }}
+            customError={{ label: error.name, message: error.message }}
             className="rounded-md"
           />
         )}

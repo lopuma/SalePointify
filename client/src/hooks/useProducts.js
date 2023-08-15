@@ -1,31 +1,28 @@
 import { useAddProducts, useFetchProducts } from '@/services/products'
+import { usePageStore } from '@/store/storePage'
 import { useQuery } from '@tanstack/react-query'
-import { useSearchParams } from 'next/navigation'
-import { useRef } from 'react'
-
-const usePage = () => {
-  const searchParams = useSearchParams()
-  const page = useRef('1')
-  page.current = searchParams.get('page')
-  if (!page.current) return '1'
-  return page.current
-}
+import { useFilters } from './useFilters'
 
 function useProducts() {
-  const page = usePage()
+  const { isPage: page } = usePageStore()
+  const { category } = useFilters()
   const mutation = useAddProducts()
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['products', page],
-    queryFn: useFetchProducts,
-    staleTime: Infinity,
-  })
-
+  const { data, isLoading, isError, error, isFetching, isPreviousData } =
+    useQuery({
+      queryKey: ['products', category, page],
+      queryFn: useFetchProducts,
+      keepPreviousData: true,
+      staleTime: Infinity,
+    })
   return {
     products: data?.products,
     pagination: data?.pagination,
     isError,
+    error,
+    isFetching,
+    isPreviousData,
     isLoading,
-    allCategory: data?.allCategory,
+    allCategory: data?.allCategory.toSorted(),
     mutation,
   }
 }

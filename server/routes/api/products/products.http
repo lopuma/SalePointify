@@ -1,5 +1,5 @@
 ###
-GET http://192.168.1.142:3001/api/products
+GET http://192.168.1.142:3001/api/products?category=Chicken&page=2
 
 ###
 GET http://192.168.1.142:3001/api/products?s=close

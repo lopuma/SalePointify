@@ -1,6 +1,7 @@
 'use client'
 import Currency from '@/components/UI/Currency/page'
 import { BookNotification } from '@/components/UI/Notification/ProductNotifications'
+import { useCartStore } from '@/store/storeCart'
 // import { Image } from '@nextui-org/react'
 import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
 import toast from 'react-hot-toast'
@@ -60,6 +61,7 @@ import { RiDeleteBinLine } from 'react-icons/ri'
 // }
 
 export function ProductItems({ product }) {
+  const { setIsCart, isCart } = useCartStore()
   // const isSuccess = useRef(false)
   const handleClick = () => {
     console.log('click', product)
@@ -71,6 +73,8 @@ export function ProductItems({ product }) {
       cover: product.image,
     }
     const title = 'Title1'
+    console.log(isCart + 1)
+    setIsCart(isCart + 1)
     toast(
       <BookNotification
         message={message}
