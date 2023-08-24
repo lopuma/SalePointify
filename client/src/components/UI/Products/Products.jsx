@@ -35,7 +35,7 @@ function Products() {
     error,
     products,
     isFetching,
-    isPreviousData,
+    isPreviousData
   } = useProducts()
   const { filterProducts } = useFilters()
   const filteredProducts = filterProducts(products)

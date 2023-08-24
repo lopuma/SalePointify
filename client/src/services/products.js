@@ -9,7 +9,7 @@ const API_BASE_URL = config.API_BASE_URL
 export const useFetchProducts = async ({ queryKey }) => {
   if (queryKey === '') return null
   const instance = axios.create({
-    baseURL: API_BASE_URL,
+    baseURL: API_BASE_URL
   })
   return await instance
     .get(`/products?category=${queryKey[1]}&page=${queryKey[2]}`)
@@ -21,7 +21,7 @@ export const useFetchProducts = async ({ queryKey }) => {
         page: res?.page,
         perPage: res?.per_page,
         total: res?.total,
-        totalPages: res?.total_pages,
+        totalPages: res?.total_pages
       }
       const mappedProducts = res?.results.map((product) => {
         return {
@@ -29,17 +29,18 @@ export const useFetchProducts = async ({ queryKey }) => {
           title: product.name,
           description: product.description,
           price: product.price,
+          idcategory: product.idcategory,
           category: product.category,
           image: product.image,
-          active: product.active,
+          active: product.active
         }
       })
-      const hasCategory = res?.allCategory?.map(({ category }) => category)
-      const uniqueCategories = new Set([...hasCategory])
+      // const hasCategory = res?.allCategory?.map(({ category }) => category)
+      // const uniqueCategories = new Set([...hasCategory])
       return {
         products: mappedProducts,
-        pagination,
-        allCategory: [...uniqueCategories],
+        pagination
+        // allCategory: [...uniqueCategories],
       }
     })
 }
@@ -47,11 +48,11 @@ export const useFetchProducts = async ({ queryKey }) => {
 const newProduct = {
   name: 'rice',
   price: '0.89',
-  category: 'alimentacion',
+  category: 'alimentación',
   description: 'This is a product',
   active: true,
   image:
-    'https://res.cloudinary.com/ordering/image/upload/f_auto,q_auto,w_250,c_limit/f_auto,q_auto,h_600,c_limit/v1650277680/fcpbremjyx82d4q32vvo.jpg',
+    'https://res.cloudinary.com/ordering/image/upload/f_auto,q_auto,w_250,c_limit/f_auto,q_auto,h_600,c_limit/v1650277680/fcpbremjyx82d4q32vvo.jpg'
 }
 
 export const useAddProducts = () => {
@@ -60,8 +61,7 @@ export const useAddProducts = () => {
     mutationFn: (formData) => {
       return axios.post('http://192.168.1.142:3001/api/productss', newProduct)
     },
-    onError: (error, variables, context) => {
-      console.log({ error, variables })
+    onError: (_error, _variables, context) => {
       console.error(`rolling back optimistic update with id ${context.id}`)
     },
     onSuccess: (data, variables, context) => {
@@ -73,7 +73,7 @@ export const useAddProducts = () => {
       )
       queryClient.invalidateQueries({ queryKey: ['products'] })
     },
-    onSettled: () => {},
+    onSettled: () => { }
   })
 
   return mutation

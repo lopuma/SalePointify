@@ -1,7 +1,7 @@
 import { Router } from 'express'
 const routerCompany = Router()
 
-let companyData = {
+const companyData = {
   id: '0001',
   firstName: 'Jose',
   lastName: 'Cedeño',
@@ -19,9 +19,9 @@ let companyData = {
       parent_code: 20,
       state: 'Gipuzkoa',
       population: 'Donostia/San Sebastián',
-      zip_code: '20017',
-    },
-  ],
+      zip_code: '20017'
+    }
+  ]
 }
 
 const getCompany = (req, res) => {
@@ -40,7 +40,7 @@ const postCompany = (req, res) => {
     founded,
     employees,
     description,
-    locations,
+    locations
   } = req.body
 
   companyData.firstName = firstName
@@ -57,7 +57,7 @@ const postCompany = (req, res) => {
   res.status(201).json({
     success: true,
     message: 'Company data updated',
-    data: companyData,
+    data: companyData
   })
 }
 

@@ -6,11 +6,11 @@ export const storeFilters = create(
     (set) => ({
       category: FILTERS_LIST.ALL_PRODUCTS_FILTER,
       setUpdateCategory: (category) =>
-        set((state) => ({ category: (state.category = category) })),
+        set((state) => ({ category: (state.category = category) }))
     }),
     {
       name: 'filters-storage',
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => sessionStorage)
     }
   )
 )

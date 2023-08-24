@@ -1,7 +1,7 @@
 'use client'
 import { Container } from '@/components/Container'
-import { DeveplomentFooter } from '@/components/DeveplomentFooter/page'
-import { Cart } from '@/components/UI/Cart/page'
+import { DevelopmentFooter } from '@/components/DevelopmentFooter/page'
+import { Cart } from '@/components/UI/Cart/Cart'
 import { Filters } from '@/components/UI/Filters/Filters'
 import Products from '@/components/UI/Products/Products'
 import config from '@/config'
@@ -14,7 +14,7 @@ function NewOrder() {
         <Products />
         <Cart />
       </Container>
-      {config.IS_DEVELOPMENT && <DeveplomentFooter />}
+      {config.IS_DEVELOPMENT && <DevelopmentFooter />}
     </>
   )
 }

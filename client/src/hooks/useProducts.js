@@ -1,8 +1,11 @@
+import { useFilters } from '@/hooks/useFilters'
 import { useAddProducts, useFetchProducts } from '@/services/products'
 import { usePageStore } from '@/store/storePage'
 import { useQuery } from '@tanstack/react-query'
-import { useFilters } from './useFilters'
-
+import axios from 'axios'
+const useFetchCategories = () => {
+  return axios.get('http://192.168.1.142:3001/api/categories')
+}
 function useProducts() {
   const { isPage: page } = usePageStore()
   const { category } = useFilters()
@@ -12,8 +15,13 @@ function useProducts() {
       queryKey: ['products', category, page],
       queryFn: useFetchProducts,
       keepPreviousData: true,
-      staleTime: Infinity,
+      staleTime: Infinity
     })
+  const { data: allCategory } = useQuery({
+    queryKey: ['categories'],
+    queryFn: useFetchCategories,
+    staleTime: Infinity
+  })
   return {
     products: data?.products,
     pagination: data?.pagination,
@@ -22,8 +30,8 @@ function useProducts() {
     isFetching,
     isPreviousData,
     isLoading,
-    allCategory: data?.allCategory.toSorted(),
-    mutation,
+    allCategory: allCategory?.data?.results?.toSorted(),
+    mutation
   }
 }
 

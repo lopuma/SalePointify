@@ -1,9 +1,10 @@
+import Image from 'next/image'
 import styles from './Cart.module.css'
 export function Cart() {
   const cartPro = []
-  const handleRemoveProduct = (event) => {
-    console.log(event.target)
-  }
+  // const handleRemoveProduct = (event) => {
+  //   console.log(event.target)
+  // }
   return (
     <section className="h-[500px] md:max-w-[400px] md:w-[400px] bg-green-200 rounded-sm border">
       <h1>Cart</h1>
@@ -11,7 +12,7 @@ export function Cart() {
       <div className={styles.container}>
         {cartPro?.map((product) => (
           <div className={styles.product} key={product?.id}>
-            <img src={product?.thumbnail} alt={product?.title} />
+            <Image src={product?.thumbnail} alt={product?.title} />
             <h3>{product.title}</h3>
             {/* <Quantifier
               removeProductCallback={() => handleRemoveProduct(product?.id)}

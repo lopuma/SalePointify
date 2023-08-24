@@ -14,10 +14,10 @@ export function Filters() {
   const filteredProducts = filterProducts(products)
   const handleChangeCategory = (event) => {
     if (event.target.value === category) return
+    console.log(event.target.value)
     setUpdateCategory(event.target.value)
     setIsPage(1)
   }
-
   return (
     <Container>
       <div
@@ -38,9 +38,9 @@ export function Filters() {
               <option value={FILTERS_LIST.ALL_PRODUCTS_FILTER}>
                 {FILTERS_LIST.ALL_PRODUCTS_FILTER.toUpperCase()}
               </option>
-              {allCategory?.map((category) => (
-                <option key={category} value={category}>
-                  {category.toUpperCase()}
+              {allCategory?.map(({ idcategory, name }) => (
+                <option key={idcategory} value={idcategory}>
+                  {name.toUpperCase()}
                 </option>
               ))}
             </select>

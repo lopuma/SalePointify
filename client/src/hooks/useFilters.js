@@ -6,7 +6,7 @@ export function useFilters() {
     return products?.filter((product) => {
       return (
         category === FILTERS_LIST.ALL_PRODUCTS_FILTER ||
-        product?.category === category
+        product?.idcategory === parseInt(category)
       )
     })
   }

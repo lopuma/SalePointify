@@ -1,0 +1,41 @@
+### GET ALL
+GET http://127.0.0.1:3001/api/products?category=3&page=1
+
+### GET ALL CATEGORIES
+GET http://127.0.0.1:3001/api/categories
+
+### GET BY ID
+GET http://127.0.0.1:3001/api/products/d14857f8-2866-4599-ad09-8cbffd362cc4
+
+### DELETE BY ID
+DELETE  http://127.0.0.1:3001/api/products/e86121b5-29c8-4e24-bfdb-90a09b1b83ae
+
+###
+GET http://127.0.0.1:3001/api/products?s=close
+
+###
+GET http://127.0.0.1:3001/api/products?s=active
+
+###
+GET http://127.0.0.1:3001/api/products?d=2023-07-28
+
+
+###
+GET http://127.0.0.1:3001/api/products?s=active&d=2023-07-29
+
+###
+GET http://127.0.0.1:3001/api/products?s=close&d=2023-07-26
+
+###
+POST http://127.0.0.1:3001/api/products
+Content-Type: application/json
+
+{
+    "name":"rice",
+    "price":0.89,
+    "category":"other",
+    "description":"This is a product",
+    "active":true,
+    "image":"https://res.cloudinary.com/ordering/image/upload/f_auto,q_auto,w_250,c_limit/f_auto,q_auto,h_600,c_limit/v1650277680/fcpbremjyx82d4q32vvo.jpg"
+}
+
